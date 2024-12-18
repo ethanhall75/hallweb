@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <!-- Song Guessing Game!!! -->
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Song Lyric Guessing Game</title>
+ <style>
+     body {
+         font-family: Arial, sans-serif;
+         text-align: center;
+         background-color: #f0f8ff;
+         color: #333;
+         margin: 0;
+         padding: 0;
+     }
+     header {
+         background-color: #4CAF50;
+         color: white;
+         padding: 20px;
+     }
+     .container {
+         padding: 20px;
+     }
+     .options {
+         display: flex;
+         justify-content: center;
+         gap: 10px;
+         margin-top: 20px;
+     }
+     .option {
+         padding: 10px 20px;
+         border: 1px solid #4CAF50;
+         background-color: white;
+         color: #4CAF50;
+         cursor: pointer;
+         border-radius: 5px;
+     }
+     .option:hover {
+         background-color: #4CAF50;
+         color: white;
+     }
+     .message {
+         margin-top: 20px;
+         font-size: 18px;
+     }
+ </style>
+</head>
+<body>
+ <header>
+     <h1>Guess the Song!</h1>
+ </header>
+ <div class="container">
+     <p id="lyrics">Press "Generate Song" to start!</p>
+     <button id="generate">Generate Song</button>
+
+     <div class="options">
+         <button class="option" id="option1">Option 1</button>
+         <button class="option" id="option2">Option 2</button>
+         <button class="option" id="option3">Option 3</button>
+     </div>
+
+     <div class="message" id="message"></div>
+ </div>
+
+ <script>
+     const songs = [
+         {
+             lyrics: "Is this the real life? Is this just fantasy?",
+             correct: "Bohemian Rhapsody",
+             options: ["Bohemian Rhapsody", "Stairway to Heaven", "Imagine"]
+         },
+         {
+             lyrics: "Just a small-town girl, livin' in a lonely world...",
+             correct: "Don't Stop Believin'",
+             options: ["Livin' on a Prayer", "Don't Stop Believin'", "Eye of the Tiger"]
+         },
+         {
+             lyrics: "Cause baby you're a firework, come on show 'em what you're worth...",
+             correct: "Firework",
+             options: ["Firework", "Rolling in the Deep", "Halo"]
+         }
+     ];
+
+     const lyricsElement = document.getElementById('lyrics');
+     const messageElement = document.getElementById('message');
+     const generateButton = document.getElementById('generate');
+     const options = document.querySelectorAll('.option');
+
+     let currentSong;
+
+     generateButton.addEventListener('click', () => {
+         const randomIndex = Math.floor(Math.random() * songs.length);
+         currentSong = songs[randomIndex];
+
+         lyricsElement.textContent = currentSong.lyrics;
+         options.forEach((option, index) => {
+             option.textContent = currentSong.options[index];
+             option.style.display = 'inline-block';
+             option.style.backgroundColor = 'white';
+             option.disabled = false;
+         });
+         messageElement.textContent = '';
+     });
+
+     options.forEach(option => {
+         option.addEventListener('click', (e) => {
+             const chosenAnswer = e.target.textContent;
+             if (chosenAnswer === currentSong.correct) {
+                 messageElement.textContent = "Correct! You're a music genius!";
+                 messageElement.style.color = "green";
+             } else {
+                 messageElement.textContent = `Wrong! The correct answer was "${currentSong.correct}".`;
+                 messageElement.style.color = "red";
+             }
+             options.forEach(opt => opt.disabled = true);
+         });
+     });
+ </script>    
+</body>
+</html>
